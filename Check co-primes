@@ -1,0 +1,13 @@
+from math import gcd
+
+def are_relatively_prime(a, b):
+    return gcd(a, b) == 1
+
+# Test the function with two numbers
+num1 = 14
+num2 = 25
+
+if are_relatively_prime(num1, num2):
+    print(f"{num1} and {num2} are relatively prime.")
+else:
+    print(f"{num1} and {num2} are not relatively prime.")
