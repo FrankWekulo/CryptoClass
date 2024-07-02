@@ -1,0 +1,32 @@
+import random
+from sympy import isprime
+
+def generate_prime_candidate(start, end):
+    """
+    Generate a random number within the given range and check if it is prime.
+    Continue generating until a prime number is found.
+    """
+    while True:
+        candidate = random.randint(start, end)
+        if isprime(candidate):  # Check if the candidate is a prime number
+            return candidate
+
+def generate_keys(start, end):
+    """
+    Generate two distinct prime numbers p and q within the specified range.
+    """
+    p = generate_prime_candidate(start, end)
+    q = generate_prime_candidate(start, end)
+    while p == q:  # Ensure p and q are distinct
+        q = generate_prime_candidate(start, end)
+    return p, q
+
+# Specify the range for the prime numbers
+start_range = 100
+end_range = 1000
+
+# Generate the prime numbers
+p, q = generate_keys(start_range, end_range)
+
+print(f"Prime number p: {p}")
+print(f"Prime number q: {q}")
