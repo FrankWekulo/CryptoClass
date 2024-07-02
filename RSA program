@@ -1,0 +1,79 @@
+import random
+from sympy import isprime, gcd
+from math import isqrt
+
+def generate_prime_candidate(start, end):
+    """ Generate a random number within the given range and check if it is prime. """
+    while True:
+        candidate = random.randint(start, end)
+        if isprime(candidate):
+            return candidate
+
+def generate_keys(start, end):
+    """ Generate two distinct prime numbers p and q within the specified range. """
+    p = generate_prime_candidate(start, end)
+    q = generate_prime_candidate(start, end)
+    while p == q:
+        q = generate_prime_candidate(start, end)
+    return p, q
+
+def extended_gcd(a, b):
+    """ The extended Euclidean algorithm to find the greatest common divisor. """
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, x, y = extended_gcd(b % a, a)
+        return (g, y - (b // a) * x, x)
+
+def mod_inverse(e, phi_n):
+    """ Returns the modular inverse of e mod phi_n, which is d such that (d * e) % phi_n == 1 """
+    g, x, y = extended_gcd(e, phi_n)
+    if g != 1:
+        raise Exception('Modular inverse does not exist')
+    else:
+        return x % phi_n
+
+def encrypt(m, e, n):
+    """ Encrypt the message m using the public key (e, n). """
+    return pow(m, e, n)
+
+def decrypt(c, d, n):
+    """ Decrypt the ciphertext c using the private key (d, n). """
+    return pow(c, d, n)
+
+# Generate two random prime numbers p and q
+start_range = 100
+end_range = 500
+p, q = generate_keys(start_range, end_range)
+n = p * q
+phi_n = (p - 1) * (q - 1)
+
+# Choose a public exponent e
+e = 65537  # Common choice for e
+
+# Ensure e is coprime with phi_n
+while gcd(e, phi_n) != 1:
+    e = random.randint(2, phi_n - 1)
+
+# Calculate the private key d
+d = mod_inverse(e, phi_n)
+
+# Print the keys
+print(f"Prime number p: {p}")
+print(f"Prime number q: {q}")
+print(f"n (p * q): {n}")
+print(f"Euler's Totient (phi_n): {phi_n}")
+print(f"Public key (e, n): ({e}, {n})")
+print(f"Private key (d, n): ({d}, {n})")
+
+# Message to encrypt
+m = 42
+print(f"Original message: {m}")
+
+# Encrypt the message
+c = encrypt(m, e, n)
+print(f"Encrypted message: {c}")
+
+# Decrypt the message
+m_decrypted = decrypt(c, d, n)
+print(f"Decrypted message: {m_decrypted}")
