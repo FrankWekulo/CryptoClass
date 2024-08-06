@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Update Customer Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="update-container">
+        <h2>Update Your Details</h2>
+        <form action="update_customer.php" method="post">
+            <input type="hidden" name="customer_id" value="<?php echo $_SESSION['customer_id']; ?>">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" required>
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <label for="card_number">Credit Card Number:</label>
+            <input type="text" id="card_number" name="card_number" required>
+            
+            <label for="expiry_date">Expiry Date:</label>
+            <input type="date" id="expiry_date" name="expiry_date" required>
+            
+            <input type="submit" value="Update">
+        </form>
+    </div>
+</body>
+</html>
